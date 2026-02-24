@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APGACHA FF - FAJAR AP</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Roboto:wght@900&display=swap');
+        body { background-color: #050505; font-family: 'Roboto', sans-serif; color: white; }
+        .ff-font { font-family: 'Oswald', sans-serif; }
+        .ff-card { background: #111; border: 2px solid #222; }
+        .modal { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); }
+    </style>
+</head>
+<body class="p-4">
+    <audio id="sndSpin" src="https://www.soundjay.com/misc/sounds/mechanical-clonking-1.mp3"></audio>
+    <audio id="sndWin" src="https://www.soundjay.com/human/sounds/applause-01.mp3"></audio>
+
+    <div class="max-w-md mx-auto pb-24">
+        <div id="fakeWinner" class="bg-black/90 border-l-4 border-yellow-500 p-2 mb-4 rounded text-[11px] hidden animate-pulse">
+            <span class="text-yellow-500 font-bold uppercase">NOTIF:</span> <span id="fakeName" class="text-white font-bold"></span> memenangkan <span id="fakePrize" class="text-yellow-400"></span>!
+        </div>
+
+        <header class="text-center mb-4">
+            <h1 class="ff-font text-4xl text-[#ffb400] italic tracking-tighter">APGACHA FF</h1>
+            <p onclick="activateAdmin()" class="text-[9px] text-gray-500 tracking-[4px] cursor-pointer uppercase">Owner: Fajar AP</p>
+        </header>
+
+        <div class="ff-card rounded-xl p-3 mb-4 border-l-4 border-blue-600">
+            <input type="text" id="buyerName" onchange="saveName()" placeholder="SET NICKNAME..." class="bg-transparent text-white font-black italic ff-font w-full text-lg uppercase outline-none">
+        </div>
+
+        <button onclick="toggleModal(true)" class="w-full mb-4 bg-gray-900 text-yellow-500 ff-font py-2 rounded text-[11px] italic tracking-widest border border-gray-700">📜 LIHAT DAFTAR HADIAH</button>
+
+        <div class="ff-card rounded-xl p-4 mb-4 flex justify-between items-center border border-yellow-600/30">
+            <div><p class="text-[10px] text-gray-400 font-bold">SALDO KOIN</p><p id="userKoin" class="text-3xl font-black italic text-white">5</p></div>
+            <button onclick="topup()" class="bg-[#ffb400] text-black ff-font px-6 py-2 rounded font-black italic">TOP UP</button>
+        </div>
+
+        <div class="ff-card rounded-2xl p-6 text-center border-b-8 border-[#ffb400]">
+            <p class="text-[11px] text-red-600 font-black italic mb-4 uppercase animate-pulse">#CLAIM HADIAH HARUS BESERTAKAN BUKTI ISI BACKPACK#</p>
+            
+            <div class="bg-gray-900 rounded-lg overflow-hidden border-2 border-gray-800 mb-4 h-48 flex items-center justify-center">
+                <img id="prizeImg" src="https://wallpapercave.com/wp/wp4803525.jpg" class="w-full h-full object-cover">
+            </div>
+            
+            <div class="h-16 flex flex-col justify-center mb-4">
+                <h2 id="resultText" class="ff-font text-lg text-gray-400 italic uppercase">Ready for Booyah?</h2>
+            </div>
+
+            <button onclick="spinGacha()" id="btnSpin" class="w-full bg-[#ffb400] text-black ff-font py-5 rounded font-black text-2xl italic shadow-[0_4px_0_rgb(180,120,0)] uppercase active:translate-y-1">DRAW (1 KOIN)</button>
+        </div>
+
+        <div id="backpackSection" class="mt-8">
+            <h3 class="ff-font text-sm text-yellow-500 mb-3 italic tracking-widest uppercase">🎒 Backpack (Hadiah Anda)</h3>
+            <div id="backpackList" class="space-y-2">
+                <p class="text-[10px] text-gray-600 text-center py-4 bg-black/40 rounded italic uppercase tracking-widest">Tas Kosong...</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="listModal" class="modal flex items-center justify-center p-6">
+        <div class="bg-[#111] border-2 border-yellow-500 rounded-2xl p-6 w-full max-w-sm shadow-2xl">
+            <h2 class="ff-font text-yellow-500 text-2xl mb-4 italic uppercase">DAFTAR HADIAH</h2>
+            <div class="text-[12px] space-y-3 font-bold uppercase text-gray-300">
+                <p class="text-red-500 border-b border-red-900/50 pb-1">🌟 HADIAH UTAMA (SR):</p>
+                <p class="pl-2">- AKUN SULTAN FF<br>- 1.000 DIAMOND</p>
+                <p class="text-blue-500 border-b border-blue-900/50 pb-1 pt-2">💎 HADIAH RARE (R):</p>
+                <p class="pl-2">- AKUN POLOSAN SG<br>- WEEKLY MEMBERSHIP<br>- 100 DIAMOND</p>
+                <p class="text-gray-500 border-b border-gray-800 pb-1 pt-2">🎁 HADIAH BIASA (C):</p>
+                <p class="pl-2">- SALDO RP 5.000<br>- 12 DIAMOND<br>- SALDO RP 3.000<br>- ZONK / TIDAK DAPAT</p>
+            </div>
+            <button onclick="toggleModal(false)" class="mt-8 w-full bg-yellow-500 text-black font-black py-3 rounded uppercase italic ff-font">TUTUP</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
